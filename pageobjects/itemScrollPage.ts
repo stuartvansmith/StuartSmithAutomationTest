@@ -3,8 +3,7 @@ import Item from './Item';
 import Utils from '../Shared/Utils'
 import {ItemOrder} from '../Shared/enums';
 
-import { textChangeRangeIsUnchanged } from 'typescript';
-import { ChainablePromiseElement, ElementArray } from 'webdriverio';
+import { ElementArray } from 'webdriverio';
 import { Default } from '../models/Containers';
 
 export default class ItemScrollPage extends Page {
@@ -28,42 +27,18 @@ export default class ItemScrollPage extends Page {
         
     }
 
-    async  verifyItemOrder (order: ItemOrder, availableItemPrices: ElementArray): Promise<boolean> {
-        switch (order) {
-            case ItemOrder.PriceHighToLow:
-               
-                let highPrice: number = await Utils.getPriceFromText(availableItemPrices[0]);
-                let listLen: number =  (await availableItemPrices).length;
-                let lowPrice: number = await Utils.getPriceFromText(availableItemPrices[listLen-1]);
 
-                if (highPrice>lowPrice) {
-                    return true;
-                } else {
-                    return false;
-                }
-            case ItemOrder.PriceLowToHigh:
-                return true;
-            case ItemOrder.NameAtoZ:
-                return true;
-            case ItemOrder.NameZtoA:
-                return true;
-            default:
-                throw new Error(`Invalid ItemOrder param: ${order}`);
-        }
-
-    }
-    async verifyItemOrderV2(order: ItemOrder, inventory: Default): Promise<boolean> {
+    async verifyItemOrder(order: ItemOrder, inventory: Default): Promise<boolean> {
         switch (order) {
             case ItemOrder.PriceHighToLow:
                 let highPrice: number = await Utils.getPriceFromText(inventory.Payload[0].Payload[0].PageElement);
                 let listLen: number = inventory.Payload.length;
-                let lowPrice: number = await Utils.getPriceFromText(inventory.Payload[listLen].Payload[0].PageElement);
+                let lowPrice: number = await Utils.getPriceFromText(inventory.Payload[listLen-1].Payload[0].PageElement);
                 if (highPrice>lowPrice) {
                     return true;
                 } else {
                     return false;
                 }
-                break;
         
             default:
                 break;

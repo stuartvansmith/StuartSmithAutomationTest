@@ -16,8 +16,8 @@ describe('Cart item test', () => {
     it('should change item order to (high to low)', async () => {
         await expect(HomePage.availableItemPriceList).toBeExisting();
         await HomePage.setItemOrder(ItemOrder.PriceHighToLow);
-        //await expect(await HomePage.verifyItemOrder(ItemOrder.PriceHighToLow)).toEqual(true) ;
-        await expect(await HomePage.verifyItemOrderV2(ItemOrder.PriceHighToLow)).toEqual(true) ;
+        await expect(await HomePage.verifyItemOrder(ItemOrder.PriceHighToLow)).toEqual(true) ;
+        //await expect(await HomePage.verifyItemOrderV2(ItemOrder.PriceHighToLow)).toEqual(true) ;
     });
 
     it('should add the two lowest items to the cart', async () => {

@@ -1,6 +1,5 @@
 import {ContainerTypes} from './Enums'
 import {Default, InventoryItem, ItemImage, Detail, PriceBar, AddToCart, IContainer} from './Containers'
-import Item from './Item';
 
 export default class Factory {
     static getContainer<T>(containerType: ContainerTypes): IContainer<T> {
@@ -28,14 +27,13 @@ export default class Factory {
         const inventory: Default = this.getContainer<Default>(ContainerTypes.Default);
         for (let index = 0; index < itemsContainers.length; index++) {
             const element = itemsContainers[index];
-            let newItem = inventory.Payload.push(this.getContainer<InventoryItem>(ContainerTypes.InventoryItem));
-            let newPrice = inventory.Payload[newItem].Payload.push(Factory.getContainer<PriceBar>(ContainerTypes.PriceBar));
-            inventory.Payload[newItem].Payload[newPrice].PageElement=  await element.$('.inventory_item_price');
-            let newAddToCart = inventory.Payload[newItem].Payload.push(Factory.getContainer<AddToCart>(ContainerTypes.AddToCart));
-            inventory.Payload[newItem].Payload[newAddToCart].PageElement = await element.$('.btn_inventory');
+            let newItem: number = inventory.Payload.push(this.getContainer<InventoryItem>(ContainerTypes.InventoryItem));
+            let newPrice: number = inventory.Payload[newItem-1].Payload.push(Factory.getContainer<PriceBar>(ContainerTypes.PriceBar));
+            inventory.Payload[newItem-1].Payload[newPrice-1].PageElement=  await element.$('.inventory_item_price');
+            let newAddToCart: number = inventory.Payload[newItem-1].Payload.push(Factory.getContainer<AddToCart>(ContainerTypes.AddToCart));
+            inventory.Payload[newItem-1].Payload[newAddToCart-1].PageElement = await element.$('.btn_inventory');
         }
-        
-
+      
         return inventory;
     }
 }
