@@ -4,7 +4,6 @@ import CartPage from '../pageobjects/cart.page';
 import CheckoutPage from '../pageobjects/checkout.Page'
 import  CartData  from './data/cartTest'
 import {ItemOrder} from '../Shared/enums'
-import homePage from '../pageobjects/home.page';
 
 describe('Cart item test', () => {
     it('should log in to homepage', async () => {
@@ -17,11 +16,9 @@ describe('Cart item test', () => {
         await expect(HomePage.availableItemPriceList).toBeExisting();
         await HomePage.setItemOrder(ItemOrder.PriceHighToLow);
         await expect(await HomePage.verifyItemOrder(ItemOrder.PriceHighToLow)).toEqual(true) ;
-        //await expect(await HomePage.verifyItemOrderV2(ItemOrder.PriceHighToLow)).toEqual(true) ;
     });
 
     it('should add the two lowest items to the cart', async () => {
-        
         await HomePage.addLowest(2);
         await HomePage.shoppingCartbtn.click();
         await expect(CartPage.itemList).toBeElementsArrayOfSize(2);

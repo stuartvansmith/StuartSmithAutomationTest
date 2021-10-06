@@ -17,10 +17,10 @@ class HomePage extends ItemScrollPage {
     async setItemOrder (order: ItemOrder): Promise<void> {
        await this.sortProducts.selectByAttribute('value', order);
     }
+  
     async addLowest (addCount: number) {
-        await super.addLowest(addCount, await this.itemsContainers);
+        await super.addLowest(addCount, await  Factory.getItemInventory(await this.itemsContainers));
     }
-
     async verifyItemOrder (order: ItemOrder): Promise<boolean> {
         return await super.verifyItemOrder(order, await Factory.getItemInventory(await this.itemsContainers));
     }
